@@ -1,0 +1,134 @@
+<template>
+  <div class="box">
+    <el-menu class="el-menu-vertical-demo" router>
+      <el-menu-item index="/404?id=1" class="text"> 发现音乐 </el-menu-item>
+      <el-menu-item index="/404?id=2" class="text"> 播客 </el-menu-item>
+      <el-menu-item index="/404?id=3" class="text"> 视频 </el-menu-item>
+      <el-menu-item index="/404?id=4" class="text"> 关注 </el-menu-item>
+      <el-menu-item index="/404?id=5" class="text"> 直播 </el-menu-item>
+      <el-menu-item index="/404?id=6" class="text"> 私人FM </el-menu-item>
+
+      <div class="myMusic">我的音乐</div>
+      <el-menu-item :index="`/musicList?id=${this.myLikeMusicList.id}`" class="myMusicText">
+        <el-icon class="myIcon"><el-icon-star-off /></el-icon>
+        <span>我喜欢的音乐</span>
+      </el-menu-item>
+      <el-menu-item index="/404?id=7" class="myMusicText">
+        <el-icon class="myIcon"><el-icon-download /></el-icon>
+        <span>本地与下载</span>
+      </el-menu-item>
+      <el-menu-item index="/404?id=8" class="myMusicText">
+        <el-icon class="myIcon"><el-icon-timer /></el-icon>
+        <span>最近播放</span>
+      </el-menu-item>
+
+      <el-sub-menu index="10">
+        <template slot="title">
+          <span class="playlist">创建的歌单</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item :index="`/musicList?id=${item.id}`" class="myMusicText"
+            v-for="(item, index) in this.myCreatedList" :key="item.id" style="padding-left: 20px">
+            <el-icon class="myIcon"><el-icon-document-copy /></el-icon>
+            <span>{{ item.name }}</span>
+          </el-menu-item>
+        </el-menu-item-group>
+      </el-sub-menu>
+    </el-menu>
+  </div>
+</template>
+
+<script>
+import {
+  StarOff as ElIconStarOff,
+  Download as ElIconDownload,
+  Timer as ElIconTimer,
+  DocumentCopy as ElIconDocumentCopy,
+} from '@element-plus/icons-vue'
+
+import { mapState, mapActions } from 'vuex'
+
+export default {
+  components: {
+    ElIconStarOff,
+    ElIconDownload,
+    ElIconTimer,
+    ElIconDocumentCopy,
+  },
+  methods: {
+    ...mapActions('musicList', ['getList']),
+  },
+  computed: {
+    ...mapState('musicList', ['myLikeMusicList', 'myCreatedList']),
+  },
+  created() {
+    this.getList()
+  },
+}
+</script>
+
+<style scoped>
+.box {
+  width: 198px;
+  background-color: #fff;
+}
+
+.myIcon {
+  font-size: 14px;
+}
+
+.el-menu-vertical-demo {
+  margin-top: 12px;
+}
+
+.el-menu-item {
+  width: 198px;
+}
+
+.text {
+  height: 36px;
+  line-height: 36px;
+  font-size: 14px;
+}
+
+.is-active {
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.myMusic {
+  font-size: 14px;
+  color: #999;
+  margin: 10px 20px;
+}
+
+.myMusicText {
+  font-size: 14px;
+  height: 38px;
+  line-height: 38px;
+  transform: translateX(-5px);
+}
+
+.playlist {
+  font-size: 12px;
+  color: #999;
+  font-weight: 400;
+}
+
+/deep/ .el-submenu__title {
+  margin-top: 10px;
+  line-height: 30px;
+  height: 30px;
+}
+
+/deep/.el-menu-item-group__title {
+  padding: 0;
+}
+
+.el-submenu .el-menu-item {
+  height: 38px;
+  line-height: 38px;
+  font-weight: 400;
+  padding-left: 20px;
+}
+</style>
