@@ -1,14 +1,15 @@
 <template>
   <div class="box">
     <div class="topIcon">
-      <el-icon class="myIcon"><el-icon-d-arrow-left /></el-icon>
-      <i :class="{
-        myIcon: true,
-        play: true,
-        'el-icon-video-play': !musicPlay,
-        'el-icon-video-pause': musicPlay,
-      }" @click="musicPause"></i>
-      <el-icon class="myIcon"><el-icon-d-arrow-right /></el-icon>
+      <el-icon class="myIcon">
+        <ArrowLeftBold />
+      </el-icon>
+      <el-icon class="myIcon play" @click="musicPause">
+        <VideoPause v-if="musicPlay" />
+        <VideoPlay v-else />
+      </el-icon><el-icon class="myIcon ArrowRightBold">
+        <ArrowRightBold />
+      </el-icon>
     </div>
     <div class="progressBox">
       <div class="progressNumber">{{ musicTime }}</div>
@@ -24,18 +25,11 @@
 </template>
 
 <script>
-import {
-  DArrowLeft as ElIconDArrowLeft,
-  DArrowRight as ElIconDArrowRight,
-} from '@element-plus/icons-vue'
 
 import { mapState } from 'vuex'
 
 export default {
-  components: {
-    ElIconDArrowLeft,
-    ElIconDArrowRight,
-  },
+
   data() {
     return {
       value1: 0,
@@ -96,10 +90,19 @@ export default {
     },
   },
   computed: {
-    ...mapState(['musicUrl', 'musicDuration']),
+    ...mapState(['musicUrl', 'musicDuration', 'musicVolume']),
+    MusicVolume() {
+      return this.musicVolume
+    }
   },
   created() { },
-  watch: {},
+  watch: {
+    //监听数值变化设置音量
+    MusicVolume(newVal) {
+      //音量最低单位是0.00，最高是1
+      this.$refs['musicAudio'].volume = newVal / 100
+    }
+  },
 }
 </script>
 
@@ -129,6 +132,11 @@ export default {
   margin: 0 16px;
   cursor: pointer;
 }
+
+.ArrowRightBold {
+  margin-left: 12px;
+}
+
 
 .progressBox {
   display: flex;

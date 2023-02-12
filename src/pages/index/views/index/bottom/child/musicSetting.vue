@@ -1,27 +1,44 @@
 <template>
   <!-- 歌曲设置 -->
   <div class="box">
-    <el-icon class="myIcon"><el-icon-s-promotion /></el-icon>
-    <el-icon class="myIcon"><el-icon-headset /></el-icon>
-    <el-icon class="myIcon"><el-icon-share /></el-icon>
-    <el-icon class="myIcon"><el-icon-s-unfold /></el-icon>
+    <!-- 音量 -->
+    <el-popover placement="top" trigger="hover" popper-style="min-width: 0px;width: 50px;padding: 10px 5px">
+      <template #reference>
+        <el-icon class=" myIcon">
+          <Headset />
+        </el-icon>
+      </template>
+      <el-slider v-model="musicVolume" vertical height="100px" tooltip-class="mySlider" @input="volumeChange" />
+    </el-popover>
+
+
+    <!-- 分享 -->
+    <el-icon class="myIcon">
+      <Share />
+    </el-icon>
+    <!-- 历史列表 -->
+    <el-icon class="myIcon">
+      <Expand />
+    </el-icon>
   </div>
 </template>
 
 <script>
-import {
-  SPromotion as ElIconSPromotion,
-  Headset as ElIconHeadset,
-  Share as ElIconShare,
-  SUnfold as ElIconSUnfold,
-} from '@element-plus/icons-vue'
+import { mapMutations, mapState } from 'vuex';
+
+
 export default {
-  components: {
-    ElIconSPromotion,
-    ElIconHeadset,
-    ElIconShare,
-    ElIconSUnfold,
+
+  computed: {
+    ...mapState(['musicVolume'])
   },
+  methods: {
+    ...mapMutations(['setMusicVolume']),
+    volumeChange(e) {
+      this.setMusicVolume(e)
+    }
+  }
+
 }
 </script>
 
@@ -31,6 +48,7 @@ export default {
   justify-content: end;
   align-items: center;
   height: 71px;
+
 }
 
 .myIcon {
@@ -39,3 +57,4 @@ export default {
   margin: 0 11px;
 }
 </style>
+

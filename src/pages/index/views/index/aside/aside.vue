@@ -10,26 +10,34 @@
 
       <div class="myMusic">我的音乐</div>
       <el-menu-item :index="`/musicList?id=${this.myLikeMusicList.id}`" class="myMusicText">
-        <el-icon class="myIcon"><el-icon-star-off /></el-icon>
+        <el-icon class="myIcon">
+          <Star />
+        </el-icon>
         <span>我喜欢的音乐</span>
       </el-menu-item>
       <el-menu-item index="/404?id=7" class="myMusicText">
-        <el-icon class="myIcon"><el-icon-download /></el-icon>
+        <el-icon class="myIcon">
+          <Download />
+        </el-icon>
         <span>本地与下载</span>
       </el-menu-item>
       <el-menu-item index="/404?id=8" class="myMusicText">
-        <el-icon class="myIcon"><el-icon-timer /></el-icon>
+        <el-icon class="myIcon">
+          <Timer />
+        </el-icon>
         <span>最近播放</span>
       </el-menu-item>
 
       <el-sub-menu index="10">
-        <template slot="title">
+        <template #title>
           <span class="playlist">创建的歌单</span>
         </template>
         <el-menu-item-group>
           <el-menu-item :index="`/musicList?id=${item.id}`" class="myMusicText"
             v-for="(item, index) in this.myCreatedList" :key="item.id" style="padding-left: 20px">
-            <el-icon class="myIcon"><el-icon-document-copy /></el-icon>
+            <el-icon class="myIcon">
+              <Tickets />
+            </el-icon>
             <span>{{ item.name }}</span>
           </el-menu-item>
         </el-menu-item-group>
@@ -39,22 +47,12 @@
 </template>
 
 <script>
-import {
-  StarOff as ElIconStarOff,
-  Download as ElIconDownload,
-  Timer as ElIconTimer,
-  DocumentCopy as ElIconDocumentCopy,
-} from '@element-plus/icons-vue'
+
 
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  components: {
-    ElIconStarOff,
-    ElIconDownload,
-    ElIconTimer,
-    ElIconDocumentCopy,
-  },
+
   methods: {
     ...mapActions('musicList', ['getList']),
   },
@@ -113,9 +111,12 @@ export default {
   font-size: 12px;
   color: #999;
   font-weight: 400;
+  height: 22px;
+  line-height: 22px;
 }
 
-/deep/ .el-submenu__title {
+
+/deep/.el-sub-menu__title {
   margin-top: 10px;
   line-height: 30px;
   height: 30px;

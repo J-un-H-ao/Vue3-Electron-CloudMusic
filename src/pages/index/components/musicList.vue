@@ -1,13 +1,18 @@
 <template>
   <div class="musicListBox">
     <el-table :data="musicList" stripe style="width: 100%" :border="true" @row-dblclick="dblclick">
-      <el-table-column type="index" :index="1" width="50"> </el-table-column>
+      <el-table-column prop="index" width="50" align="right">
+      </el-table-column>
       <el-table-column label="操作" width="58">
-        <template slot-scope="scope">
+        <template #default="scope">
           <!-- icon -->
           <div class="iconBox">
-            <el-icon class="myIcon"><el-icon-star-off /></el-icon>
-            <el-icon class="myIcon"><el-icon-download /></el-icon>
+            <el-icon class="myIcon">
+              <Star />
+            </el-icon>
+            <el-icon class="myIcon">
+              <Download />
+            </el-icon>
           </div>
         </template>
       </el-table-column>
@@ -24,18 +29,12 @@
 </template>
 
 <script>
-import {
-  StarOff as ElIconStarOff,
-  Download as ElIconDownload,
-} from '@element-plus/icons-vue'
+
 
 import { getListAllMusic } from '../api/musicList/musicList'
 import { mapActions } from 'vuex'
 export default {
-  components: {
-    ElIconStarOff,
-    ElIconDownload,
-  },
+
   data() {
     return {
       musicList: [],
@@ -49,7 +48,7 @@ export default {
       this.musicList = res.songs
 
       //毫秒变成分钟
-      this.musicList.forEach((item) => {
+      this.musicList.forEach((item, index) => {
         let s = parseInt((item.dt % (1000 * 60)) / 1000)
         let m = parseInt((item.dt % (1000 * 60 * 60)) / (1000 * 60))
 
@@ -58,7 +57,16 @@ export default {
         m = this.PrefixZero(m, 2)
 
         item.time = `${m}:${s}`
+        //再顺手加个index
+
+
+        item.index = index + 1
+        if (item.index < 10) {
+          item.index = '0' + item.index
+        }
+
       })
+
     },
 
     //补0函数
@@ -127,7 +135,7 @@ export default {
 .iconBox {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: start;
 }
 
 .myIcon {

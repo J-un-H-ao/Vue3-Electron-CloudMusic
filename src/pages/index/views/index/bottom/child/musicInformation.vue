@@ -13,7 +13,9 @@
           this.musicName ||
             '超长的歌名名名名名名名名名名名名名名名名名名名名名名名名'
         }}</span>
-        <el-icon class="myIcon"><el-icon-star-off /></el-icon>
+        <el-icon class="myIcon">
+          <Star />
+        </el-icon>
       </div>
 
       <span class="text singer">{{
@@ -24,12 +26,10 @@
 </template>
 
 <script>
-import { StarOff as ElIconStarOff } from '@element-plus/icons-vue'
+
 import { mapState } from 'vuex'
 export default {
-  components: {
-    ElIconStarOff,
-  },
+
   computed: {
     ...mapState(['musicImgUrl', 'musicName', 'musicSinger']),
   },

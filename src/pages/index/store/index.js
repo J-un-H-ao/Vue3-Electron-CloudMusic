@@ -15,6 +15,8 @@ export default createStore({
     musicName: '',
     musicSinger: '',
     musicDuration: '',
+    // 音量
+    musicVolume: 100
   },
   mutations: {
     setUserId(state, userId) {
@@ -29,6 +31,11 @@ export default createStore({
       state.musicSinger = obj.musicSinger
       state.musicDuration = obj.musicTime
     },
+
+    // 设置音量大小
+    setMusicVolume(state, Volume) {
+      state.musicVolume = Volume
+    }
   },
 
   actions: {
