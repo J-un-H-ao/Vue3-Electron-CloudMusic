@@ -25,7 +25,7 @@
 <script>
 import { Close as ElIconClose } from '@element-plus/icons-vue'
 
-import { getQRcode, getCookie } from './api/user/login'
+import { getQRcode, getCookie } from '../../api/login/login'
 
 export default {
   components: {
@@ -84,7 +84,7 @@ export default {
 
 .iconBox {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .myIcon {

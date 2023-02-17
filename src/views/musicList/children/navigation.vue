@@ -21,7 +21,7 @@
 
 <script>
 import { Search as ElIconSearch } from '@element-plus/icons-vue'
-import musicList from '@/pages/index/components/musicList.vue'
+import musicList from '@/components/musicList.vue'
 export default {
   components: {
     musicList,

@@ -1,5 +1,4 @@
-<template>
-  <!-- 歌曲设置 -->
+<template><!-- 歌曲设置 -->
   <div class="box">
     <!-- 音量 -->
     <el-popover placement="top" trigger="hover" popper-style="min-width: 0px;width: 50px;padding: 10px 5px">
@@ -45,7 +44,7 @@ export default {
 <style scoped>
 .box {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
   height: 71px;
 
