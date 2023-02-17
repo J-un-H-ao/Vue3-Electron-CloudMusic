@@ -1,7 +1,13 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('electronAPI', {
-    loginWin: () => ipcRenderer.send('loginWinDestroy'),
-    indexWin: () => ipcRenderer.send('indexWinDestroy')
+    //隐藏登陆窗口
+    loginWinHide: () => ipcRenderer.send('loginWinHide'),
+
+    //显示登陆窗口
+    loginWinShow: () => ipcRenderer.send('loginWinShow'),
+
+    //关闭主页面窗口
+    indexWinDestroy: () => ipcRenderer.send('indexWinDestroy')
 })
 

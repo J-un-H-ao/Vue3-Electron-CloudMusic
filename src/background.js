@@ -15,20 +15,29 @@ protocol.registerSchemesAsPrivileged([
 
 async function createWindow() {
 
-  ipcMain.on('loginWinDestroy', () => {
-    loginWin.destroy()
-    //close不知道为什么有延迟
+  //登陆窗口的显示
+  ipcMain.on('loginWinShow', () => {
+    loginWin.show()
   })
 
+  //隐藏窗口
+  ipcMain.on('loginWinHide', () => {
+    loginWin.hide()
+  })
+
+  //关闭主页的时候把登陆页面也一起关闭
   ipcMain.on('indexWinDestroy', () => {
     indexWin.destroy()
+    loginWin.destroy()
     //close不知道为什么有延迟
   })
 
   // Create the browser window.
   const indexWin = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1020,
+    height: 670,
+    minHeight: 670,
+    minWidth: 1020,
     frame: false,
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
@@ -55,8 +64,12 @@ async function createWindow() {
 
 
   const loginWin = new BrowserWindow({
-    width: 800,
-    height: 600,
+    height: 560,
+    width: 360,
+    minHeight: 560,
+    minWidth: 360,
+    maxHeight: 560,
+    maxWidth: 360,
     frame: false,
     webPreferences: {
 
@@ -67,10 +80,13 @@ async function createWindow() {
       preload: path.join(__dirname, "preload.js")
     }
   })
+  //开始的时候就隐藏登陆窗口
+  loginWin.hide()
 
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
+    //拼接一下路径
     await loginWin.loadURL(`${process.env.WEBPACK_DEV_SERVER_URL}#/login`)
 
     // if (!process.env.IS_TEST) loginWin.webContents.openDevTools()

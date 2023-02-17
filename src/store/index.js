@@ -2,8 +2,6 @@ import { createStore } from 'vuex'
 import user from './modules/user'
 import musicList from './modules/musicList'
 
-// Vue.use(Vuex)
-
 import { getMusicUrl } from '../api/musicUrl/musicUrl'
 
 export default createStore({

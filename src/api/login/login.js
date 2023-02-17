@@ -26,3 +26,6 @@ export function getCookie(key) {
 export function getLoginStatus() {
   return request.get('/login/status')
 }
+
+
+

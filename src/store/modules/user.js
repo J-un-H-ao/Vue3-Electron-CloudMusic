@@ -3,8 +3,8 @@ import { getLoginStatus, getUserInformation } from '../../api/user/user'
 export default {
   namespaced: true,
   state: {
-    NickName: '',
-    avatarUrl: '',
+    NickName: null,
+    avatarUrl: null,
   },
   mutations: {
     setUserDate(state, userObj) {
@@ -14,6 +14,7 @@ export default {
   },
 
   actions: {
+    //获取登陆状态
     async loginStatus(context) {
       const res = await getLoginStatus()
 
@@ -32,6 +33,7 @@ export default {
         // 访问上一级仓库，调用上一级的仓库设置userId
         // 因为传参只能传一个，所以第三个参数必定是{root：true}
         context.commit('setUserId', userId, { root: true })
+
       }
     },
   },

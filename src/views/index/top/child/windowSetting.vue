@@ -19,8 +19,9 @@
 
 export default {
   methods: {
+    //关闭窗口
     closeWin() {
-      window.electronAPI.indexWin()
+      window.electronAPI.indexWinDestroy()
     }
   }
 }

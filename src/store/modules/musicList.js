@@ -15,6 +15,7 @@ export default {
     },
   },
   actions: {
+    //获取歌单
     async getList(context) {
       const res = await gerUserMusicList(context.rootState.userId)
 

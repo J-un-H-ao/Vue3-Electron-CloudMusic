@@ -1,6 +1,6 @@
 <template>
   <div class="bigBox">
-    <div class="iconBox" @click="a">
+    <div class="iconBox" @click="loginWinHide">
       <el-icon class="myIcon"><el-icon-close /></el-icon>
     </div>
 
@@ -59,8 +59,8 @@ export default {
       }
     },
 
-    a() {
-      window.electronAPI.loginWin()
+    loginWinHide() {
+      window.electronAPI.loginWinHide()
     },
   },
   created() {

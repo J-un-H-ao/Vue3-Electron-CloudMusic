@@ -7,3 +7,8 @@ export function getLoginStatus() {
 export function getUserInformation(userId) {
   return request.get(`/user/detail?uid=${userId}&timestamp=${Date.now()}`)
 }
+
+// 退出登陆
+export function loginOut() {
+  return request.get('/logout')
+}
