@@ -9,7 +9,7 @@
     <el-icon class="myIcon">
       <FullScreen />
     </el-icon>
-    <el-icon class="myIcon">
+    <el-icon class="myIcon" @click="closeWin">
       <Close />
     </el-icon>
   </div>
@@ -18,7 +18,11 @@
 <script>
 
 export default {
-
+  methods: {
+    closeWin() {
+      window.electronAPI.indexWin()
+    }
+  }
 }
 </script>
 

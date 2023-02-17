@@ -1,6 +1,6 @@
 <template>
   <div class="bigBox">
-    <div class="iconBox">
+    <div class="iconBox" @click="a">
       <el-icon class="myIcon"><el-icon-close /></el-icon>
     </div>
 
@@ -26,6 +26,8 @@
 import { Close as ElIconClose } from '@element-plus/icons-vue'
 
 import { getQRcode, getCookie } from '../../api/login/login'
+
+
 
 export default {
   components: {
@@ -58,7 +60,7 @@ export default {
     },
 
     a() {
-      window.ipcRenderer()
+      window.electronAPI.loginWin()
     },
   },
   created() {

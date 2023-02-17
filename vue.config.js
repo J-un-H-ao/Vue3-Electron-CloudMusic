@@ -4,7 +4,9 @@ module.exports = defineConfig({
   publicPath: './',
   pluginOptions: {
     electronBuilder: {
-      nodeIntegration: true
+      preload: 'src/preload.js'
     }
   }
 })
+
+
