@@ -1,16 +1,16 @@
 <template>
   <div class="bigBox">
 
-    <div class="userBox" v-if="!NickName" @click="openLoginWin">
+    <div class="userBox" v-if="!userStatus" @click="openLoginWin">
       <el-avatar :src="this.avatarUrl || imgUrl" size="small"></el-avatar>
-      <span>{{ this.NickName || nickName }}</span>
+      <span>{{ this.nickname || nickName }}</span>
     </div>
 
     <el-popover placement="bottom" :width="150" trigger="click" v-else>
       <template #reference>
         <div class="userBox">
           <el-avatar :src="this.avatarUrl || imgUrl" size="small"></el-avatar>
-          <span>{{ this.NickName || nickName }}</span>
+          <span>{{ this.nickname || nickName }}</span>
         </div>
       </template>
 
@@ -25,10 +25,10 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+
 
 import { loginOut } from '@/api/user/user'
-
+import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
@@ -38,42 +38,43 @@ export default {
     }
   },
   computed: {
-    ...mapState('user', ['NickName', 'avatarUrl']),
+    ...mapState('user', ['userStatus', 'nickname', 'avatarUrl'])
   },
   methods: {
-    ...mapActions('user', ['loginStatus']),
-    ...mapActions('musicList', ['getList']),
-
+    ...mapActions('user', ['getLoginStatus']),
+    ...mapActions('musicList', ['getMusicList']),
     //检测登陆状态的函数
     tokenDetection() {
       window.addEventListener('storage', async (e) => {
         if (e.key === 'Music_cookie_get_notice') {
           //检测到登陆成功之后获取登陆信息
-          await this.loginStatus()
-          //重新获取一次歌单
-          await this.getList()
+          this.getLoginStatus()
+          //存一下时间戳
         }
       })
     },
+
+    //退出登陆
+    async loginOut() {
+      //调用接口
+      await loginOut()
+      // 检查登陆状态
+      this.getLoginStatus()
+      // 再获取一次歌单
+      this.getMusicList()
+      //存时间戳告诉系统刷新页面
+      window.localStorage.setItem('Music_cookie_get_notice', Date.now())
+    },
+
 
     //打开登陆窗口
     openLoginWin() {
       window.electronAPI.loginWinShow()
     },
-
-
-    async loginOut() {
-      //调用接口
-      await loginOut()
-      // 刷新页面
-      this.$router.go(0)
-    }
   },
 
   created() {
-    this.tokenDetection()
-    //页面创建的时候尝试获取登陆信息
-    this.loginStatus()
+    this.getLoginStatus()
   },
 }
 </script>

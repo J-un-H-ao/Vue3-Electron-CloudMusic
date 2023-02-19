@@ -41,7 +41,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getMusicUrl']),
 
     async getMusic(id) {
       const res = await getListAllMusic(id)
@@ -77,13 +76,7 @@ export default {
     //双击某一行的事件
     dblclick(row) {
       console.log(row)
-      this.getMusicUrl({
-        id: row.id,
-        name: row.name,
-        imgUrl: row.al.picUrl,
-        singer: row.ar[0].name,
-        time: row.time,
-      })
+
     },
   },
   created() {

@@ -23,8 +23,10 @@ export function getCookie(key) {
   return request.get(`/login/qr/check?key=${key}&timerstamp=${Date.now()}`)
 }
 
+
+//获取登陆状态
 export function getLoginStatus() {
-  return request.get('/login/status')
+  return request.get(`/login/status?timerstamp=${Date.now()}`)
 }
 
 

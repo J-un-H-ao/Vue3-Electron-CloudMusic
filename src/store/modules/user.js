@@ -1,40 +1,71 @@
-import { getLoginStatus, getUserInformation } from '../../api/user/user'
-
+import { getLoginStatus } from '@/api/login/login'
 export default {
   namespaced: true,
   state: {
-    NickName: null,
-    avatarUrl: null,
+    //登陆状态
+    userStatus: false,
+
+    //用户id
+    userId: 0,
+
+    //用户昵称和头像
+    nickname: null,
+    avatarUrl: null
   },
   mutations: {
-    setUserDate(state, userObj) {
-      state.NickName = userObj.nickname
+    // 设置登陆状态
+    setUserStatus(state, status) {
+      state.userStatus = status
+    },
+
+    // 设置用户昵称和头像
+    setUserInformation(state, userObj) {
+      state.nickname = userObj.nickname
       state.avatarUrl = userObj.avatarUrl
+    },
+
+    //设置用户id
+    setUserId(state, userId) {
+      state.userId = userId
     },
   },
 
   actions: {
-    //获取登陆状态
-    async loginStatus(context) {
+    //检测登陆状态然后设置相关的用户属性
+    async getLoginStatus({ commit, dispatch }) {
       const res = await getLoginStatus()
 
-      if (res.data.account.status === 0) {
-        //登陆成功再调用接口
-        const {
-          profile: { avatarUrl, nickname, userId },
-        } = await getUserInformation(res.data.account.id)
+      if (res.data.account.status === -10) {
+        //登陆失败
+        commit('setUserStatus', false)
 
-        //把id存到vuex  要传多个参数只能传对象 他妈的
-        context.commit('setUserDate', {
-          avatarUrl: avatarUrl,
-          nickname: nickname,
+        //设置用户头像
+        commit('setUserInformation', {
+          nickname: null,
+          avatarUrl: null,
         })
 
-        // 访问上一级仓库，调用上一级的仓库设置userId
-        // 因为传参只能传一个，所以第三个参数必定是{root：true}
-        context.commit('setUserId', userId, { root: true })
+        //设置用户id
+        commit('setUserId', 0)
+
+        return
+      } else {
+        //登陆成功
+        commit('setUserStatus', true)
+
+        //设置用户头像
+        commit('setUserInformation', {
+          nickname: res.data.profile.nickname,
+          avatarUrl: res.data.profile.avatarUrl,
+        })
+
+        //设置用户id
+        commit('setUserId', res.data.profile.userId)
+
+        //成功的时候发起请求拿歌单列表   用musicList的action
+        dispatch('musicList/getMusicList', {}, { root: true })
 
       }
-    },
+    }
   },
 }

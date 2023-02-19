@@ -49,6 +49,7 @@ export default {
 
       if (res.code === 803) {
         this.QRcodeText = '登陆成功'
+        //存一下时间戳告知系统刷新页面
         window.localStorage.setItem('Music_cookie_get_notice', Date.now())
       } else if (res.code === 802) {
         this.QRcodeText = '请授权'

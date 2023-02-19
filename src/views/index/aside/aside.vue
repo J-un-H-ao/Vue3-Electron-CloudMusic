@@ -9,7 +9,8 @@
       <el-menu-item index="/404?id=6" class="text"> 私人FM </el-menu-item>
 
       <div class="myMusic">我的音乐</div>
-      <el-menu-item :index="`/musicList?id=${this.myLikeMusicList.id}`" class="myMusicText">
+      <!--短路运算，如果没有id就设置为0  -->
+      <el-menu-item :index="`/musicList?id=${this.myLikeList.id || 0}`" class="myMusicText">
         <el-icon class="myIcon">
           <Star />
         </el-icon>
@@ -33,8 +34,8 @@
           <span class="playlist">创建的歌单</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item :index="`/musicList?id=${item.id}`" class="myMusicText"
-            v-for="(item, index) in this.myCreatedList" :key="item.id" style="padding-left: 20px">
+          <el-menu-item :index="`/musicList?id=${item.id}`" class="myMusicText" v-for="(item, index) in this.myCreateList"
+            :key="item.id" style="padding-left: 20px">
             <el-icon class="myIcon">
               <Tickets />
             </el-icon>
@@ -49,18 +50,18 @@
 <script>
 
 
-import { mapState, mapActions } from 'vuex'
 
+import { mapState } from 'vuex';
 export default {
 
   methods: {
-    ...mapActions('musicList', ['getList']),
+
   },
   computed: {
-    ...mapState('musicList', ['myLikeMusicList', 'myCreatedList']),
+    ...mapState('musicList', ['myLikeList', 'myCreateList'])
   },
   created() {
-    this.getList()
+
   },
 }
 </script>

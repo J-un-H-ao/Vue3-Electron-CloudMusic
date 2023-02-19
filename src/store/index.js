@@ -6,7 +6,7 @@ import { getMusicUrl } from '../api/musicUrl/musicUrl'
 
 export default createStore({
   state: {
-    userId: 0,
+
     // 当前播放歌曲的信息
     musicUrl: '暂无',
     musicImgUrl: '',
@@ -17,10 +17,6 @@ export default createStore({
     musicVolume: 100
   },
   mutations: {
-    setUserId(state, userId) {
-      state.userId = userId
-    },
-
     //设置当前播放歌曲的信息
     setMusicObj(state, obj) {
       state.musicUrl = obj.musicUrl
