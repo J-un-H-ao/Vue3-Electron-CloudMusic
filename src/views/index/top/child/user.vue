@@ -60,8 +60,6 @@ export default {
       await loginOut()
       // 检查登陆状态
       this.getLoginStatus()
-      // 再获取一次歌单
-      this.getMusicList()
       //存时间戳告诉系统刷新页面
       window.localStorage.setItem('Music_cookie_get_notice', Date.now())
     },

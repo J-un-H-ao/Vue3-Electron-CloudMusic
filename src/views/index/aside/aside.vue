@@ -51,18 +51,30 @@
 
 
 
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 export default {
-
-  methods: {
-
-  },
   computed: {
     ...mapState('musicList', ['myLikeList', 'myCreateList'])
   },
-  created() {
 
+
+  methods: {
+    // ...mapActions('', ['']),
+    // // 监听本地存储变化
+    // monitorLocalStorage() {
+    //   window.addEventListener('storage', (e) => {
+    //     if (e.key === 'Music_cookie_get_notice') {
+    //       // 检测到登陆和退出登陆就随机一个key刷新整个导航页
+
+
+    //     }
+    //   })
+    // }
   },
+  created() {
+    // this.monitorLocalStorage()
+  }
+
 }
 </script>
 

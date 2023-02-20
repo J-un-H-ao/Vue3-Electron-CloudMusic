@@ -3,22 +3,7 @@
 </template>
 
 <script>
-export default {
-  methods: {
-    // 监听本地存储变化
-    monitorLocalStorage() {
-      window.addEventListener('storage', (e) => {
-        if (e.key === 'Music_cookie_get_notice') {
-          // 检测到登陆和退出登陆就刷新整个index
-          this.$forceUpdate()
-        }
-      })
-    }
-  },
-  created() {
-    this.monitorLocalStorage()
-  }
-}
+
 </script>
 
 <style>

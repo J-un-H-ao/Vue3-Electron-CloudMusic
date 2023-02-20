@@ -48,6 +48,9 @@ export default {
         //设置用户id
         commit('setUserId', 0)
 
+        //调用musicList的action拿歌单（如果没登录就会把歌单设置为空）
+        dispatch('musicList/getMusicList', {}, { root: true })
+
         return
       } else {
         //登陆成功
@@ -62,7 +65,7 @@ export default {
         //设置用户id
         commit('setUserId', res.data.profile.userId)
 
-        //成功的时候发起请求拿歌单列表   用musicList的action
+        //调用musicList的action拿歌单（如果没登录就会把歌单设置为空）
         dispatch('musicList/getMusicList', {}, { root: true })
 
       }
